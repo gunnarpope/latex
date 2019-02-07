@@ -11,4 +11,4 @@ if [[ $# -ne 1 ]]; then
 fi 
 
 mkdir -p tmp
-pdflatex -output-directory=tmp $1 && xdg-open tmp/${1::-4}.pdf 
+pdflatex -output-directory=tmp -halt-on-error $1 && xdg-open tmp/${1::-4}.pdf 
