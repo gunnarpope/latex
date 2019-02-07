@@ -1,0 +1,30 @@
+\documentclass[border=0.5mm]{standalone}
+
+\usepackage{tikz}
+\usepackage{tikz-timing}%[2014/10/29]
+%\usetikztiminglibrary[rising arrows]{clockarrows} %This should be enabled
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usetikztiminglibrary[rising arrows]{clockarrows}
+\begin{document}        
+            \begin{tikztimingtable}[%
+                timing/.style={x=4ex,y=3ex},
+                timing/rowdist=5ex,
+                every node/.style={inner sep=0,outer sep=0},
+                %timing/c/arrow tip=latex, %and this set the style
+                thick,
+                ]
+                &1l N(N1) 2C\\
+                &2C N(N2) 1c\\
+                \extracode
+                    \begin{scope}[very thick]
+                        \newcommand{\yheight}{3ex};
+                        %DRAW
+                        \draw [thin, densely dotted,shorten >=-1mm](N1.base) -- ($ (N1.base) + (0,-1ex) $);
+                        \draw [thin, densely dotted,shorten >=-1mm](N2.north) -- ($ (N2.base) + (0,\yheight+1ex)$);
+                        \draw [<->, >=latex, thin]($ (N1.base) + (0,-1ex) $) -- ($ (N2.base) + (0,\yheight+1ex)$) node[midway, above = 0.2ex] {$T$} ;           
+                    \end{scope}
+            \end{tikztimingtable}
+\end{document}
+
+

@@ -1,0 +1,45 @@
+% I found this on p52 of 'The Tikz Timing Package' by Martin Scharrer
+% see tikz-timing.pdf
+
+
+
+\ begin {tikztimingtable}[%
+timing / dslope =0.1 , timing /. style ={ x =2 ex , y =2 ex } , x =2 ex ,
+timing / rowdist =3 ex ,
+timing / name /. style ={ font =\ sffamily \ scriptsize } ,
+timing / nodes / advanced ,
+]
+Clock \ degr {90} & l 2{ C } N ( A1 ) 5{ C } \\
+Clock \ degr {180}& C 2{ C } N ( A2 ) 4{ C } c \\
+Clock \ degr {270}& h 3{ C } N ( A3 ) 4{ C } \\
+Clock \ degr {0} & [ C ] 2{ C } N ( A0 ) 2{ C } N ( A4 ) 3{ C } c ;[ dotted ]
+2 L ; 2{ C } N ( A5 ) 3{ C } \\
+Start of T$_ {\ text { sw }} $ & 4 S G N ( start ) \\
+Input Pulse & 2.0 L 2 H 3.5 L ;[ dotted ] 2 L ; 5 L \\
+Set 3
+& 2.5 L 2 H 3.0 L ;[ dotted ] 2 L ; 5 L \\
+Set 2
+& 3.0 L 2 H 2.5 L ;[ dotted ] 2 L ; 5 L \\
+Set 1
+& 3.5 L 2 H 2.0 L ;[ dotted ] 2 L ; 5 L \\
+Set 0
+& 4.0 L 2 H 1.5 L ;[ dotted ] 2 L ; 5 L \\
+Reset
+& 7.5 L ;[ dotted ] 2 L ; 2 L N ( reset ) 2 H 1 L \\
+Final Pulse & 2.5 L N ( B1 ) e N ( B2 ) e N ( B3 ) e 3.5 H ; [ dotted ]
+2 H ; 2 H 3 L \\
+Counter
+& N ( x ) 2 D { Full } N ( B0 ) 2 D {0} N ( B4 ) 2 D {1} 1.5 D ;[ dotted ]
+.25 D {2} 1.75 D {};
+2 D {~ D$_ \ text { M } $ } N ( B5 ) 2 D { D$_ \ text { M } $ +1} D N ( y )\\
+\ extracode
+%\ tablegrid
+\ node [ anchor = north ] at ( $ ( x ) ! .5 ! ( y ) - (0 ,.75) $ )
+{\ scriptsize D$_ \ text { M } $ = MSBs of Duty Cycle };
+\ begin { background }[ timing / picture , line width =.06 ex , color = black !60]
+\ foreach \ n in {0 ,... ,5}
+\ draw ( A \ n . TOP ) -- ( B \ n . BOTTOM );
+\ end { background }
+\ end { ti kz ti m in gt ab l e }%
+
+

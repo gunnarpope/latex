@@ -1,0 +1,97 @@
+\documentclass[tikz, border = 5pt]{standalone}
+
+\usetikzlibrary{arrows, positioning, decorations.markings, calc}
+
+\def\nframes{20}
+\def\frame{0}
+
+\begin{document}
+
+\foreach \frame in {0,...,\nframes}
+{
+\pgfmathsetmacro{\time}{\frame / \nframes}
+
+
+\begin{tikzpicture}[
+    node distance = 1cm and 2cm,
+  ]
+
+  \tikzstyle{block} = [
+    draw,
+    minimum width = 2cm,
+    minimum height = 1cm,
+    inner sep = 2pt,
+    outer sep = 0pt,
+    align = center,
+    thick
+    ]
+
+  \tikzstyle{duplexer} = [
+    draw,
+    circle,
+    minimum width = 1cm,
+    inner sep = 2pt,
+    outer sep = 0pt,
+    thick
+    ]
+
+  \tikzstyle{line} = [
+    -latex',
+    thick,
+    postaction={
+      decorate,
+      decoration={
+        markings,
+        mark = at position \time with {\fill[orange, opacity = 0.3] circle (0.1);}
+      }
+    }
+    ]
+
+  % nodes
+  \node[duplexer] (duplexer) at (0, 0) [label=above:Duplexer]{};
+  \node[block, right=2.5cm of duplexer] (transmiter) {Transmiter};
+  \node[block, right=of transmiter] (wf generator) {Waveform\\Generator};
+  \node[block, below=of duplexer] (low noise amp) {Low-Noise\\RF\\Amplifier};
+  \node[block, below=of low noise amp] (mixer) {Mixer};
+  \node[block, right=of mixer] (local oscillator) {Local\\Oscilator};
+  \node[block, right=of local oscillator] (display) {Display};
+  \node[block, below=of mixer] (ip amplifier) {IP Amplifier};
+  \node[block, right=of ip amplifier] (signal processor) {Signal\\Processor};
+  \node[block, right=of signal processor] (data processor) {Data\\Processor};
+
+  % connections
+  \draw[line] (transmiter) -- (duplexer);
+  \draw[line] (wf generator) -- (transmiter);
+  \draw[line] (duplexer) -- (low noise amp);
+  \draw[line] (low noise amp) -- (mixer);
+  \draw[line] (mixer) -- (local oscillator);
+  \draw[line] (local oscillator) -- (transmiter);
+  \draw[line] (mixer) -- (ip amplifier);
+  \draw[line] (ip amplifier) -- (signal processor);
+  \draw[line] (signal processor) -- (data processor) coordinate[pos = 0.5] (A);
+  \draw[line] (data processor) -- (display);
+  \draw[line] (A) |- (display);
+
+  % circle
+  \draw[-latex'] ([yshift = 0.3cm]duplexer) arc (90 : 370 : 0.3);
+
+  % antena
+  \coordinate (B) at ([xshift = -2cm]duplexer);
+  \draw[ultra thick, rotate around = {90:(B)}] ([xshift = -1cm, yshift = 0.3cm]B)
+  parabola bend (B) ([xshift = 1cm, yshift = 0.3cm]B) node[above]{Antenna};
+  \draw[line] (duplexer) -- (B);
+  \draw[line] (B) -- (duplexer);
+
+  % signal
+  \coordinate (C) at ($(B) + (-0.5 * \time, 0)$);
+  \draw[red, opacity = 0.5, thick, rotate around = {90:(C)}] ([xshift = -1cm, yshift = 0.3cm]C)
+  parabola bend (C) ([xshift = 1cm, yshift = 0.3cm]C);
+
+
+  \coordinate (D) at ($(B) + ({-0.5 * (2 - \time)}, 0)$);
+  \draw[blue, opacity = 0.5, thick, rotate around = {-90:(D)}] ([xshift = -1cm, yshift = 0.3cm]D)
+  parabola bend (D) ([xshift = 1cm, yshift = 0.3cm]D);
+
+\end{tikzpicture}
+}
+\end{document}

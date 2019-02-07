@@ -6,7 +6,8 @@
 % institutions. 5. udg. Essex: Pearson Education.
 \documentclass{minimal}
 \usepackage{tikz}
-\usetikzlibrary{arrows,positioning} 
+\usetikzlibrary{arrows,calc,shapes,decorations.pathreplacing}
+\usetikzlibrary{positioning} 
 \tikzset{
     %Define standard arrow tip
     >=stealth',
@@ -18,6 +19,13 @@
            text width=6.5em,
            minimum height=2em,
            text centered},
+    regist/.style={
+    	rectangle,
+    	sharp corners,
+    	draw=black, very thick,
+    	text width=6.5em,
+    	minimum height=2em,
+    	text centered},
     % Define arrow style
     pil/.style={
            ->,
@@ -29,20 +37,31 @@
 \begin{document}
 
 \begin{tikzpicture}[node distance=1cm, auto,]
- %nodes
- \node[punkt] (market) {Market (b)};
- \node[punkt, inner sep=5pt,below=0.5cm of market]
- (formidler) {Intermediaries (c)};
- % We make a dummy figure to make everything look nice.
- \node[above=of market] (dummy) {};
- \node[right=of dummy] (t) {Ultimate borrower}
-   edge[pil,bend left=45] (market.east) % edges are used to connect two nodes
-   edge[pil, bend left=45] (formidler.east); % .east since we want
-                                             % consistent style
- \node[left=of dummy] (g) {Ultimate lender}
-   edge[pil, bend right=45] (market.west)
-   edge[pil, bend right=45] (formidler.west)
-   edge[pil,<->, bend left=45] node[auto] {Direct (a)} (t);
+% nodes
+\node[punkt](eo){EO};
+
+\node[right=of eo, regist](reg1){REG};
+
+\begin{scope}[every node/.style={draw, anchor=text, rectangle split,
+	rectangle split parts=7,minimum width=2cm}]
+	\node (R) at (2,4){ \nodepart{two} \nodepart{three}
+	\nodepart{four}$I\times I$\nodepart{five}\nodepart{six}\nodepart{seven}};
+\end{scope}
+
+% %nodes
+% \node[punkt] (market) {Market (b)};
+% \node[punkt, inner sep=5pt,below=0.5cm of market]
+% (formidler) {Intermediaries (c)};
+% % We make a dummy figure to make everything look nice.
+% \node[above=of market] (dummy) {};
+% \node[right=of dummy] (t) {Ultimate borrower}
+%   edge[pil,bend left=45] (market.east) % edges are used to connect two nodes
+%   edge[pil, bend left=45] (formidler.east); % .east since we want
+%                                             % consistent style
+% \node[left=of dummy] (g) {Ultimate lender}
+%   edge[pil, bend right=45] (market.west)
+%   edge[pil, bend right=45] (formidler.west)
+%   edge[pil,<->, bend left=45] node[auto] {Direct (a)} (t);
 \end{tikzpicture}
 
 \vspace{1em}
