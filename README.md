@@ -16,7 +16,7 @@ Add this line to your `~/.bash_aliases` file
 
 Then, in a new terminal:
 
-    $ sourece ~/.bash_aliases
+    $ source ~/.bash_aliases
 
 
 ## Build System Diagrams and Circuits using TikZ
