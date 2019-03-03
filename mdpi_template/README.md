@@ -13,6 +13,9 @@ This will build the tex document using pdflatex, build the bibliography, and ope
 
     $ ./texify.sh root-document.tex
 
+This will compile all of the `.tex` files and generate an output file `root-document.pdf` file in the `pdf/` folder.
+
+
 ## File Hierarchy
 The main document is sourced from the `root-document.tex` file. This file sources all paper sections from the `sec/` folder. The biblography section is sourced from the `bib/` folder and I use [Mendeley](https://www.mendeley.com/download-desktop/) to generate and source all of the `.bib` files. The output files are all placed in the `pdf/` folder. See `texify.sh`  for more details.
 
